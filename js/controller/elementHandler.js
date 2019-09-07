@@ -1,8 +1,8 @@
-function itemTitleTextBox_onchange(){
-    document.getElementById("consoleMessageLabel").textContent = 'func: itemTitleTextBox_onchange!';
+function itemTitleTextBox_oninput(){
+    document.getElementById("consoleMessageLabel").textContent = 'func: itemTitleTextBox_oninput!';
 }
-function itemMessageTextBox_onchange(){
-    document.getElementById("consoleMessageLabel").textContent = 'func: itemMessageTextBox_onchange!';
+function itemMessageTextBox_oninput(){
+    document.getElementById("consoleMessageLabel").textContent = 'func: itemMessageTextBox_oninput!';
 }
 
 function startButton_onclick(){
