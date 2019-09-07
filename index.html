@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta http-equiv="Content-Type" charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="./js/controller/pageController.js"></script>
+    <script type="text/javascript" src="./js/controller/elementHandler.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/pageContainer.css">
+</head>
+<body>
+    <div id="container">
+        <div id="pageTitleCell">
+            <h1 id="pageTitleLabel"/>
+        </div>
+        <div id="itemCell">
+            <h2 id="itemTitleLabel"/>
+            <h3 id="itemMessageLabel"/>
+            <input type="text" id="itemTitleTextBox" onchange="itemTitleTextBox_onchange()"/>
+            <input type="text" id="itemMessageTextBox" onchange="itemMessageTextBox_onchange()"/>
+        </div>
+        <div id="commandCell">
+            <input type="button" id="createButton" onclick="createButton_onclick()"/>
+            <input type="button" id="deleteButton" onclick="deleteButton_onclick()"/>
+            <input type="button" id="editButton" onclick="editButton_onclick()"/>
+            <input type="button" id="updateButton" onclick="updateButton_onclick()"/>
+            <input type="button" id="detailButton" onclick="detailButton_onclick()"/>
+            <input type="button" id="startButton" onclick="startButton_onclick()"/>
+        </div>
+        <div id="consoleMessageCell">
+            <div id="consoleMessageLabel">aaa</div>
+        </div>
+    </div>
+</body>
+</html>
