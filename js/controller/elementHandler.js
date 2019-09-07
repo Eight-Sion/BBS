@@ -1,8 +1,8 @@
 function itemTitleTextBox_onchange(){
-
+    document.getElementById("consoleMessageLabel").textContent = 'func: itemTitleTextBox_onchange!';
 }
 function itemMessageTextBox_onchange(){
-
+    document.getElementById("consoleMessageLabel").textContent = 'func: itemMessageTextBox_onchange!';
 }
 
 function startButton_onclick(){
