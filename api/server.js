@@ -1,31 +1,46 @@
-let http = require('http');
-let request = require('request');
-let response = require('response');
-let url = 'https://api.atnd.org/events/?keyword_or=javascript&format=json'
-request.setEncoding("utf-8");
+let http = require("http");
+const port = 8080;
+const logger = fun => console.log(`[${new Date()}] ${fun.call(null)}`);
 
-request.on("data", chunk => {
-    logger(() => `received data[${chunk}]`);
+const server = http.createServer((request, response) => {
+    request.setEncoding("utf-8");
 
-    const data = JSON.parse(chunk);
+    request.on("data", chunk => {
+        logger(() => `received data[${chunk}]`);
 
-    const operator = data["operator"];
-    const a = data["a"];
-    const b = data["b"];
+        const data = JSON.parse(chunk);
 
-    const responseSender = d => response.end(JSON.stringify(d));
+        const operator = data["operator"];
+        const a = data["a"];
+        const b = data["b"];
 
-    if (operator === "+") {
-        responseSender({ result: a + b});
-    } else if (operator === "-") {
-        responseSender({ result: a - b});
-    } else if (operator === "*") {
-        responseSender({ result: a * b});
-    } else if (operator === "/") {
-        responseSender({ result: a / b});
-    } else {
-        logger(() => "Bad Request");
-        response.statusCode = 400;
-        responseSender({ message: `Unknown Operator[${operator}]` });
-    }
+        const responseSender = d => response.end(JSON.stringify(d));
+
+        if (operator === "+") {
+            responseSender({ result: a + b});
+        } else if (operator === "-") {
+            responseSender({ result: a - b});
+        } else if (operator === "*") {
+            responseSender({ result: a * b});
+        } else if (operator === "/") {
+            responseSender({ result: a / b});
+        } else {
+            logger(() => "Bad Request");
+            response.statusCode = 400;
+            responseSender({ message: `Unknown Operator[${operator}]` });
+        }
+    });
 });
+server.on("request", (request, response) => {
+    const socket = request.socket;
+    logger(() => `client connected[${socket.remoteAddress}:${socket.remotePort}] URL[${request.url} ${request.httpVersion}] Method[${request.method}]`);
+});
+
+server.listen(port);
+
+logger(() => "Server startup");
+
+/*
+server.close();
+logger(() => "Server shutdown");
+*/
