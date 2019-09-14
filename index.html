@@ -14,29 +14,48 @@
     <link rel="stylesheet" type="text/css" href="./css/pageContainer.css">
 </head>
 <body>
-    <button id="btn">Hello</button>
-
+<button id="btn1">Hello</button>
+<button id="btn2">Hello</button>
     <script>
-        const sock = new WebSocket("ws://18.182.118.31:5001");
+        const sock1 = new WebSocket("ws://18.182.118.31:5001");
+        const sock2 = new WebSocket("ws://18.182.118.31:5002");
 
-        sock.addEventListener("open", e => {
+        sock1.addEventListener("open", e => {
             console.log("接続が開かれたときに呼び出されるイベント");
         });
 
-        sock.addEventListener("message", e => {
+        sock1.addEventListener("message", e => {
             console.log("サーバーからメッセージを受信したときに呼び出されるイベント");
         });
 
-        sock.addEventListener("close", e => {
+        sock1.addEventListener("close", e => {
             console.log("接続が閉じられたときに呼び出されるイベント");
         });
 
-        sock.addEventListener("error", e => {
+        sock1.addEventListener("error", e => {
+            console.log("エラーが発生したときに呼び出されるイベント");
+        });
+        sock2.addEventListener("open", e => {
+            console.log("接続が開かれたときに呼び出されるイベント");
+        });
+
+        sock2.addEventListener("message", e => {
+            console.log("サーバーからメッセージを受信したときに呼び出されるイベント");
+        });
+
+        sock2.addEventListener("close", e => {
+            console.log("接続が閉じられたときに呼び出されるイベント");
+        });
+
+        sock2.addEventListener("error", e => {
             console.log("エラーが発生したときに呼び出されるイベント");
         });
 
-        btn.addEventListener("click", e => {
-            sock.send("hello");
+        btn1.addEventListener("click", e => {
+            sock1.send("hello");
+        });
+        btn2.addEventListener("click", e => {
+            sock2.send("hello")
         });
     </script>
     <div id="container">
