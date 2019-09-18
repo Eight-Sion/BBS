@@ -1,21 +1,31 @@
+const host = "localhost";
+const logger = fun => console.log(`[${new Date()}] ${fun.call(null)}`);
+const obj = {hello: "world"};
+const method = {
+    post: "POST",
+    get: "GET",
+    put: "PUT",
+    delete: "DELETE"
+}
+const headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+};
+
 window.onload = () =>{
-    const host = "18.182.118.31";
-    const logger = fun => console.log(`[${new Date()}] ${fun.call(null)}`);
-
-    const obj = {hello: "world"};
-    const method = "POST";
-    const body = JSON.stringify(obj);
-    const headers = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    };
-    document.getElementById("btnhttp").addEventListener("click", e =>{
-        fetch("http://" + host + ":80", {method, headers, body})
-            .then(response => {
-                JSON.stringify({ operator: "+", a: 8, b: 3 });
-            });
-    });
-
+    console.log("router.js window.onload!");
+    document.getElementById("btnHttpPost").addEventListener("click", e =>　{
+        console.log("post Execute!");
+        connectByCRUD(method.post);});
+    document.getElementById("btnHttpGet").addEventListener("click", e =>　{
+        console.log("get Execute!");
+        connectByCRUD(method.get);});
+    document.getElementById("btnHttpPut").addEventListener("click", e =>　{
+        console.log("put Execute!");
+        connectByCRUD(method.put);});
+    document.getElementById("btnHttpDelete").addEventListener("click", e =>　{
+        console.log("delete Execute!");
+        connectByCRUD(method.delete);});
 
     const sock1 = new WebSocket("ws://" + host + ":5001");
     const sock2 = new WebSocket("ws://" + host + ":5002");
@@ -58,4 +68,25 @@ window.onload = () =>{
         sock2.send("hello")
     });
 
+}
+
+const connectByCRUD = (type) => {
+    return () =>{
+        var body = JSON.stringify(obj);
+        switch (type) {
+            case method.get:
+            case method.delete:
+                fetch("http://" + host + ":8080", {type, headers})
+                    .then(response => {
+                        JSON.stringify({ operator: "+", a: 8, b: 3 });
+                    });
+                break;
+
+            default:
+                fetch("http://" + host + ":8080", {type, headers, body})
+                    .then(response => {
+                        JSON.stringify({ operator: "+", a: 8, b: 3 });
+                    });
+        }
+    }
 }

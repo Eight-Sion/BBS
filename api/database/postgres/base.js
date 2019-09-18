@@ -1,4 +1,4 @@
-const initialize = (host, user, database, password) =>{
+const initialize = (host, user, database, password) => {
     var {Client} = require("pg");
     var client = new Client({
         user: user,
@@ -13,12 +13,12 @@ const initialize = (host, user, database, password) =>{
     return client;
 };
 
-const create = (query, host, user, database, password) =>{
+const create = (query, host, user, database, password) => {
 
     var client = initialize(host, user, database, password);
     client.query(query)
-        .then(res => console.log(res.rows[0])
-            .catch(err => console.error(err.stack)));
+        .then(res => console.log(res.rows[0]))
+        .catch(err => console.error(err.stack));
 };
 exports.create = create;
 

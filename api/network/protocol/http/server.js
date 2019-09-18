@@ -1,5 +1,7 @@
 const serverStart = (port) => {
-    let http = require("http");
+
+    var data = null;
+    const http = require("http");
     const logger = fun => console.log(`[${new Date()}] ${fun.call(null)}`);
 
     const server = http.createServer((request, response) => {
@@ -7,28 +9,16 @@ const serverStart = (port) => {
 
         request.on("data", chunk => {
             logger(() => `received data[${chunk}]`);
+            chunk.
+            data = JSON.parse(chunk);
 
-            const data = JSON.parse(chunk);
-
-            const operator = data["operator"];
-            const a = data["a"];
-            const b = data["b"];
-
-            const responseSender = d => response.end(JSON.stringify(d));
-
-            if (operator === "+") {
-                responseSender({ result: a + b});
-            } else if (operator === "-") {
-                responseSender({ result: a - b});
-            } else if (operator === "*") {
-                responseSender({ result: a * b});
-            } else if (operator === "/") {
-                responseSender({ result: a / b});
-            } else {
-                logger(() => "Bad Request");
-                response.statusCode = 400;
-                responseSender({ message: `Unknown Operator[${operator}]` });
-            }
+        });
+        request.on("end", () => {
+            response.setHeader('Access-Control-Allow-Origin', '*');
+            response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+            response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+            response.setHeader('Access-Control-Allow-Credentials', true);
+            response.end(JSON.stringify(data));
         });
     });
     server.on("request", (request, response) => {
